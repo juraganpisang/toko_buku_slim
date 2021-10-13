@@ -1,0 +1,10 @@
+{
+    "name": "dimas/toko_buku_slim",
+    "require": {
+        "slim/slim": "3.*",
+        "cahkampung/landa-db": "^1.2" 
+    },
+    "scripts" :{
+        "start": "php -S localhost:8080 -t ."
+    }
+}
