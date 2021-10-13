@@ -96,6 +96,13 @@ foreach ($getUsers as $getU) {
     array_push($data_detailtransaksi, $data);
 
     // print_r($data_detailtransaksi);
+
+    // total
+    $total_dijual = $db->find('SELECT sum(subtotal) as total_penjualan FROM detail_transaksi');
+
+    // jumlah buku
+    $total_buku = $db->find('SELECT sum(qty) jumlah_buku FROM detail_transaksi');
+
 }
 ?>
 
@@ -125,13 +132,15 @@ foreach ($getUsers as $getU) {
     <div class="contain-body">
         <div class="container">
             <div class="row mb-4">
-                <div class=col>
+                <div class=col-4>
                     <a href="/tambah" class="btn btn-success">
                         + Tambah Pesanan
                     </a>
                 </div>
-                <div class="col">
-                    <input type="hidden" id="temp_total" />
+                <div class="col-4">
+                    <h2 class="text-right">Jumlah Buku Terjual : Rp. <span class="total_buku">-</span></h2>
+                </div>
+                <div class="col-4">
                     <h2 class="text-right">Total : Rp. <span class="total_semua">-</span></h2>
                 </div>
             </div>
@@ -151,7 +160,7 @@ foreach ($getUsers as $getU) {
                             <?php
                             $no = 1;
                             foreach ($data_transaksi as $row) { ?>
-                                <!-- Modal -->
+                                <!-- Modal Detail -->
                                 <div class="modal fade" id="detailModal<?php echo $row['id_transaksi']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
@@ -256,7 +265,7 @@ foreach ($getUsers as $getU) {
                                                             </div>
                                                         </div>
                                                 <?php
-                                                    $ke++;
+                                                        $ke++;
                                                     }
                                                 } ?>
                                                 <hr>
@@ -296,7 +305,130 @@ foreach ($getUsers as $getU) {
                                     </div>
                                 </div>
 
-                                <!-- Modal -->
+                                <!-- Modal Edit -->
+                                <!-- <div class="modal fade" id="editModal<?php echo $row['id_transaksi']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <input type="hidden" id="id_transaksi" value="<?php echo $row['id_transaksi']; ?>" />
+                                                <h5 class="modal-title" id="exampleModalLabel">Nota <?php echo $row['nota']; ?></h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                    <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <h5 class="text-center">
+                                                    Toko Buku Jaya<br>
+                                                    Jalan Gunung Sari RT 22 RW 05<br>
+                                                    Pandanlandung
+                                                </h5>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col">
+                                                        <input type="hidden" id="created_at_hidden" value="<?php echo $row['created_at']; ?>" />
+                                                        <span>Tanggal Transaksi : <br><?php echo date('F d, Y h:mA', strtotime($row['created_at'])); ?></span>
+                                                    </div>
+                                                    <div class="col">
+                                                        <span>Nama Penjual <br> <b>Ival</b></span>
+                                                    </div>
+                                                    <div class="col">
+                                                        <span>Nama Customer <br> <input type="text" id="nama_customer_edit" class="form-control" value="<?php echo $row['nama_customer']; ?>" /> </span>
+                                                    </div>
+                                                </div>
+                                                <?php
+                                                $ke = 1;
+                                                foreach ($data_detailtransaksi as $dt) {
+                                                    if ($dt['transaksi_id'] == $row['id_transaksi']) {
+                                                ?>
+                                                        <hr>
+                                                        Barang ke <?php echo $ke; ?>
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label> Kode Item </label>
+                                                                    <input type="text" class="form-control" id="kode_item_edit" value="<?php echo $dt['kode_item']; ?>" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label> Nama Item </label>
+                                                                    <input type="text" class="form-control" id="nama_item_edit" value="<?php echo $dt['nama_item']; ?>" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label> Quantity </label>
+                                                                    <input type="text" class="form-control" id="qty_edit" value="<?php echo $dt['qty'] . " buah"; ?>" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label> Harga </label>
+                                                                    <input type="text" class="form-control" id="harga_edit" value="<?php echo $dt['harga']; ?>" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label> Diskon </label>
+                                                                    <input type="text" class="form-control" id="disc_edit" value="<?php echo $dt['disc'] ?>" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col">
+                                                                <div class="form-group">
+                                                                    <label> Subtotal </label>
+                                                                    <input type="text" class="form-control" id="subtotal_edit" value="<?php echo $dt['subtotal'] ?>" />
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                <?php
+                                                        $ke++;
+                                                    }
+                                                } ?>
+                                                <hr>
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        Total Bayar
+                                                    </div>
+                                                    <div class="col-2 text-right">
+                                                        :
+                                                    </div>
+                                                    <div class="col text-right">
+                                                        <input type="hidden" id="total_bayar_hidden" value="<?php echo $row['total_bayar']; ?>" />
+                                                        <b><?php echo "Rp. " . rupiah($row['total_bayar']); ?></b>
+                                                    </div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        Jumlah Kembalian
+                                                    </div>
+                                                    <div class="col-2 text-right">
+                                                        :
+                                                    </div>
+                                                    <div class="col text-right">
+                                                        <input type="hidden" id="kembalian_hidden" value="<?php echo $row['kembalian']; ?>" />
+                                                        <b><?php echo "Rp. " . rupiah($row['kembalian']); ?></b>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="submit" class="btn btn-success" onclick="cetak(<?php echo $row['id_transaksi']; ?>)">Cetak</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> -->
+
+                                <!-- Modal Hapus -->
                                 <div class="modal fade" id="hapusModal<?php echo $row['id_transaksi']; ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                     <div class="modal-dialog" role="document">
                                         <div class="modal-content">
@@ -340,6 +472,10 @@ foreach ($getUsers as $getU) {
 </body>
 
 </html>
+<script>
+    $(".total_semua").value = <?php echo $arr_total['total'] ?>;
+    $(".total_buku").value = <?php echo $total_buku->jumlah_buku ?>;
+</script>
 <script>
     $("#deleteForm").submit(function() {
         var id = document.getElementById("id_transaksi").value;
