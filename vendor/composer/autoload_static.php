@@ -13,6 +13,7 @@ class ComposerStaticInitaecdb89bc2d43421167b931ad2ad4972
     public static $prefixLengthsPsr4 = array (
         'S' => 
         array (
+            'Slim\\Views\\' => 11,
             'Slim\\' => 5,
         ),
         'P' => 
@@ -31,6 +32,10 @@ class ComposerStaticInitaecdb89bc2d43421167b931ad2ad4972
     );
 
     public static $prefixDirsPsr4 = array (
+        'Slim\\Views\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/slim/php-view/src',
+        ),
         'Slim\\' => 
         array (
             0 => __DIR__ . '/..' . '/slim/slim/Slim',

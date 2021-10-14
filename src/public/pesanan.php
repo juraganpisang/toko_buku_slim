@@ -140,10 +140,10 @@ foreach ($getUsers as $getU) {
                     </a>
                 </div>
                 <div class="col-4">
-                    <h2 class="text-right">Jumlah Buku Terjual : Rp. <span class="total_buku"><?php echo $total_buku->jumlah_buku . " buah"; ?></span></h2>
+                    <h4 class="text-right">Jumlah Buku Terjual :<br> <span class="total_buku"><?php echo $total_buku->jumlah_buku . " buah"; ?></span></h4>
                 </div>
                 <div class="col-4">
-                    <h2 class="text-right">Total Penjualan : Rp. <span class="total_semua"><?php echo rupiah($total_dijual->total_penjualan); ?></span></h2>
+                    <h4 class="text-right">Total Penjualan :<br> Rp. <span class="total_semua"><?php echo rupiah($total_dijual->total_penjualan); ?></span></h4>
                 </div>
             </div>
             <div class="row mb-4">

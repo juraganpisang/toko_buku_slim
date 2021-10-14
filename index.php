@@ -7,29 +7,41 @@ require 'koneksi.php';
 require 'vendor/autoload.php';
 
 $app = new \Slim\App;
+
+// Get container
+$container = $app->getContainer();
+
+// Register component on container
+$container['view'] = function ($container) {
+    return new \Slim\Views\PhpRenderer('src/public');
+};
+
 $app->get('/', function (Request $request, Response $response, array $args) {
-    return require 'src/public/pesanan.php';
+    return $this->view->render($response, 'pesanan.php');
 });
 
 $app->get('/tambah', function (Request $request, Response $response, array $args) {
-    return require 'src/public/tambah-pesanan.php';
+    return $this->view->render($response, 'tambah-pesanan.php');
 });
 
 $app->post('/tambah', function (Request $request, Response $response, array $args) {
-    return require 'src/public/proses-tambah.php';
+    return $this->view->render($response, 'proses-tambah.php');
 });
 
 $app->post('/hapus', function (Request $request, Response $response, array $args) {
-    return require 'src/public/proses-hapus.php';
+    return $this->view->render($response, 'proses-hapus.php');
 });
 
 $app->post('/print', function (Request $request, Response $response, array $args) {
-    // $hasil_buku = $args['hasil_buku'];
-    // $response = $this->view->render($response, 'src/public/.php', ['hasil_buku' => $hasil_buku]);
-    // return $response;
-    
-    return require 'src/public/print.php';
+    return $this->view->render($response, 'print.php');
 });
+
+// Render PHP template in route
+$app->get('/hello/{name}', function ($request, $response, $args) {
+    return $this->view->render($response, 'coba.php', [
+        'name' => $args['name']
+    ]);
+})->setName('profile');
 
 $app->run();
 

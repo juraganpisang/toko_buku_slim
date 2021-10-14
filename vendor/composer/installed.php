@@ -70,6 +70,15 @@
                 0 => '1.0',
             ),
         ),
+        'slim/php-view' => array(
+            'pretty_version' => '3.1.0',
+            'version' => '3.1.0.0',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../slim/php-view',
+            'aliases' => array(),
+            'reference' => 'c9ec5e4027d113af35816098f9059ef5c3e3000c',
+            'dev_requirement' => false,
+        ),
         'slim/slim' => array(
             'pretty_version' => '3.12.3',
             'version' => '3.12.3.0',
