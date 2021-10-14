@@ -95,7 +95,10 @@ foreach ($getUsers as $getU) {
 
     array_push($data_detailtransaksi, $data);
 
-    // print_r($data_detailtransaksi);
+    // print_r($data_detailtransaksi)
+
+}
+
 
     // total
     $total_dijual = $db->find('SELECT sum(subtotal) as total_penjualan FROM detail_transaksi');
@@ -103,7 +106,6 @@ foreach ($getUsers as $getU) {
     // jumlah buku
     $total_buku = $db->find('SELECT sum(qty) jumlah_buku FROM detail_transaksi');
 
-}
 ?>
 
 <body>
@@ -138,10 +140,10 @@ foreach ($getUsers as $getU) {
                     </a>
                 </div>
                 <div class="col-4">
-                    <h2 class="text-right">Jumlah Buku Terjual : Rp. <span class="total_buku">-</span></h2>
+                    <h2 class="text-right">Jumlah Buku Terjual : Rp. <span class="total_buku"><?php echo $total_buku->jumlah_buku . " buah"; ?></span></h2>
                 </div>
                 <div class="col-4">
-                    <h2 class="text-right">Total : Rp. <span class="total_semua">-</span></h2>
+                    <h2 class="text-right">Total Penjualan : Rp. <span class="total_semua"><?php echo rupiah($total_dijual->total_penjualan); ?></span></h2>
                 </div>
             </div>
             <div class="row mb-4">
@@ -472,10 +474,6 @@ foreach ($getUsers as $getU) {
 </body>
 
 </html>
-<script>
-    $(".total_semua").value = <?php echo $arr_total['total'] ?>;
-    $(".total_buku").value = <?php echo $total_buku->jumlah_buku ?>;
-</script>
 <script>
     $("#deleteForm").submit(function() {
         var id = document.getElementById("id_transaksi").value;
